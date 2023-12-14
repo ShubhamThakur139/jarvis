@@ -1,0 +1,48 @@
+
+.parent {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+align-items: center;
+}
+
+
+.solutionDiv {
+    height: 110px;
+    margin: 14px 0px;
+    border-width: 12px !important;
+    border-radius: 8px;
+    border-color: black !important;
+    padding: 15px 30px;
+    background-color: #ffff;
+    width: 60%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.flightLogo{
+    margin-right: 10px;
+}
+
+.solutionDiv:hover {
+    background-color: rgb(252, 252, 252) !important;
+}
+
+
+.flightDetail {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.bookbtn {
+    padding: 6px 30px !important;
+    Font-weight: 600 !important;
+    background-color: #FF4F17 !important;
+}
+
+
+.bookbtn:hover {
+    background-color: #d4581d !important;
+}

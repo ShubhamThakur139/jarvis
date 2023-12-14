@@ -1,0 +1,32 @@
+.counter-dropdown {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px;
+  }
+  
+  label {
+    margin-bottom: 8px;
+  }
+  
+  select {
+    padding: 8px;
+    margin-bottom: 16px;
+  }
+  
+  .quantity-controls {
+    display: flex;
+    align-items: center;
+  }
+  
+  button {
+    padding: 8px;
+    margin: 0 4px;
+    cursor: pointer;
+  }
+  
+  span {
+    font-size: 18px;
+    margin: 0 8px;
+  }
+  

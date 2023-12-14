@@ -1,0 +1,55 @@
+.inputbar{
+    display: flex;
+    justify-content: center;
+    margin: 20px 0px;
+}
+.p_dropdown{
+    width: 80%;
+    display: flex;
+    justify-content: space-around;
+    text-align: center;
+    justify-items: center;
+}
+
+
+.air_dropdown{
+    background-color: #fff;
+}
+
+.p_datapicker{
+    margin-top: 0px;
+    padding-top: 0px;
+}
+
+.p_datapicker1{
+    margin-top: 0px;
+    padding-top: 0px;
+}
+
+.p_datapicker2{
+    margin-top: 0px;
+    padding-top: 0px;
+}
+
+
+.searchbtn {
+    Font-weight: 600 !important;
+    width: 15%;
+    height: 54px;
+    background-color: #FF4F17 !important;
+}
+
+
+.searchbtn:hover {
+    width: 15%;
+    background-color: #d4581d !important;
+
+}
+
+.MuiStack-root {
+    padding-top: 0px !important;   
+}
+
+/* .css-4jnixx-MuiStack-root {
+    
+} */
