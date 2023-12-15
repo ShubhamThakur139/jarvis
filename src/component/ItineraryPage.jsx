@@ -13,8 +13,10 @@ import NewsDiv from "./NewsDiv";
 import PriceDropModal from "./PriceDropModal";
 import DocumentDiv from "./DocumentDiv";
 import Button from "@mui/material/Button";
+import { useNavigate } from "react-router-dom";
 
 const ItinerayPage = (data) => {
+  let navigate = useNavigate();
   const flightDetail = JSON.parse(localStorage.getItem("flightDetail"));
   const isCheapFareSelected = localStorage.getItem("isCheapFareSelected");
   const from = localStorage.getItem("from");
@@ -310,6 +312,9 @@ const ItinerayPage = (data) => {
             variant="contained"
             disableElevation
             className="paymentbtn"
+            onClick={() => {
+              navigate("/bookingConfirmed");
+            }}
           >
             Continue To Payment
           </Button>
