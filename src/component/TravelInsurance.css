@@ -1,0 +1,86 @@
+.travelIns_ccontainer {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 40px  0;
+  width: 80%;
+}
+.travelIns_card {
+  border: 1px solid rgba(121, 121, 142, 0.7);
+  border-radius: 10px;
+  height: 230px;
+  width: 100%;
+  background: transparent;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+  overflow: hidden;
+  background-color: white;
+}
+
+.travelIns_card_header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #D6E7FC;
+  padding: 0px 14px;
+  height: 55px;
+}
+
+.active {
+  background-color: rgba(0, 0, 255, 0.2);
+}
+
+.travelIns_card_header_text {
+  font-weight: 700;
+}
+
+.travelIns_card_header .travelIns_card_header_right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.travelIns_card_header .travelIns_card_header_right > p {
+  font-weight: 700;
+  font-size: 18px;
+  display: flex;
+  flex-direction: column;
+}
+
+.travelIns_card_header .travelIns_card_header_right > p > span {
+  font-weight: 600;
+  font-size: 12px;
+  display: flex;
+  flex-direction: column;
+}
+
+.travelIns_card_details {
+  height: 110px;
+  border-bottom: 1px solid rgb(238, 234, 234);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0px 14px;
+}
+
+.travelIns_desc {
+  margin-top: 10px;
+  text-wrap: wrap;
+  font-size: 14px;
+  color: black;
+  font-weight: 500;
+  padding: 4px 14px;
+  letter-spacing: 1.2px;
+}
+
+.travelIns_card_header .travelIns_card_header_right > button {
+  border: 1px solid #4390ee;
+  outline: none;
+  width: 90px;
+  border-radius: 5px;
+  height: 35px;
+  color: #4390ee;
+  font-weight: 800;
+  background-color: #D6E7FC;
+}

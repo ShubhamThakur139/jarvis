@@ -5,8 +5,13 @@ import { DateTime } from "luxon";
 import { useNavigate } from "react-router-dom";
 
 const Solution = ({ data }) => {
-  const sols = data.body.flightsList;
-  console.log(sols);
+  console.log("solution", data)
+  const sols = data.flightsList;
+  const from = data.origin;
+  const to = data.destination;
+  const adultCount = data.adult;
+  const childCount = data.child;
+  const infantCount = data.infant;
   let navigate = useNavigate();
 
   return (
@@ -61,6 +66,11 @@ const Solution = ({ data }) => {
                   className="bookbtn"
                   onClick={() => {
                     localStorage.setItem("flightDetail", JSON.stringify(data));
+                    localStorage.setItem("from", from);
+                    localStorage.setItem("to", to);
+                    localStorage.setItem("adultCount", adultCount);
+                    localStorage.setItem("childCount", childCount);
+                    localStorage.setItem("infantCount", infantCount);
                     navigate("/itineraryPage", { state: data });
                   }}
                 >

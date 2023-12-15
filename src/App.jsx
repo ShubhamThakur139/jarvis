@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import Home from "./component/Home";
 import ItinerayPage from "./component/ItineraryPage";
+import CataloguePage from "./component/CataloguePage";
 import {
     createBrowserRouter,
     RouterProvider,
@@ -15,6 +16,9 @@ import {
     {
         path: "/itineraryPage",
         element: <ItinerayPage />,
+      },{
+        path: "/cataloguePage",
+        element: <CataloguePage />,
       },
   ]);
 

@@ -1,6 +1,6 @@
 import Navbar from "./Navbar";
 import "./ItineraryPage.css";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect , useRef } from "react";
 import TextField from "@mui/material/TextField";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
@@ -9,18 +9,67 @@ import Select from "@mui/material/Select";
 import FlightDetail from "./FlightDetail";
 import Card from "./Card";
 import TravelInsurance from "./TravelInsurance";
+import NewsDiv from "./NewsDiv";
+import PriceDropModal from "./PriceDropModal";
 
 const ItinerayPage = (data) => {
   const flightDetail = JSON.parse(localStorage.getItem("flightDetail"));
+  const isCheapFareSelected = localStorage.getItem("isCheapFareSelected");
   const from = localStorage.getItem("from");
   const to = localStorage.getItem("to");
+  const adultCount = localStorage.getItem("adultCount");
+  const childCount = localStorage.getItem("childCount");
+  const infantCount = localStorage.getItem("infantCount");
   const [news, setNews] = useState([]);
   const [historicNews, setHistoricNews] = useState([]);
+  const [cataolgueData, setCataolgueData] = useState([]);
+  const [showModal , setShowModal] = useState(false)
+  const firstLoad = useRef(true)
+  const totalPrice = flightDetail.totalPrice
+
+  console.log("isCheapFareSelected", isCheapFareSelected);
 
   useEffect(() => {
     fetchNewsData();
     fetchHistoricNewsData();
+    fetchCatalogueDetails();
   }, []);
+
+
+  setTimeout(() => {
+    if(firstLoad.current){
+      setShowModal(true)
+      firstLoad.current = false
+    } 
+  }, 10000)
+  const fetchCatalogueDetails = async () => {
+    console.log("fetching cataolgue");
+
+    const postData = {
+      origin: from.toUpperCase(),
+      destination: to.toUpperCase(),
+      adult: adultCount,
+      child: childCount,
+      infant: infantCount,
+      flights: flightDetail
+    };
+
+    try {
+      const response = await fetch("http://localhost:9080/v1/catalogSuggestion", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(postData),
+      });
+      const jsonData = await response.json();
+      console.log("catalogue data", jsonData);
+      setCataolgueData(jsonData);
+    } catch (error) {
+      console.error("Error while fetching News: ", error);
+    }
+
+  }
 
   const fetchNewsData = async () => {
     console.log("fetching news");
@@ -39,7 +88,7 @@ const ItinerayPage = (data) => {
         body: JSON.stringify(postData),
       });
       const jsonData = await response.json();
-      console.log("news data", jsonData);
+      console.log("news data area", jsonData.areas);
       setNews(jsonData);
     } catch (error) {
       console.error("Error while fetching News: ", error);
@@ -90,8 +139,7 @@ const ItinerayPage = (data) => {
         "Or free date change even when switching airlines. Pay fare difference, if any.",
     },
   ];
-  const totalPrice = flightDetail.totalPrice;
-  console.log("totalPrice", totalPrice);
+
   return (
     <>
       <div>
@@ -106,6 +154,7 @@ const ItinerayPage = (data) => {
             <FlightDetail data={flightDetail} />
           </div>
           <div>
+          <div id = 'insurance'>
             <div>
               <h3 className="reviewText margin  margin-top">
                 Select your fare
@@ -119,12 +168,36 @@ const ItinerayPage = (data) => {
           <div>
             <TravelInsurance />
           </div>
+          </div>
 
-          <div>
-            <h2>{news || historicNews ? "News" : ""}</h2>
-            <div>
-              <div>{news.map.}</div>
-              <div>{}</div>
+          <div style = {{display : 'flex' , flexDirection: 'column'}}>
+            {cataolgueData && cataolgueData.body && cataolgueData.body.flightResponse && cataolgueData.body.flightResponse.flightsList.length >=1 && !isCheapFareSelected && <PriceDropModal data={cataolgueData.body} showModal = {showModal} setShowModal = {setShowModal}/>}
+            <h2 className="inputDiv2">{(news) || (historicNews) ? "Journey Preview: Breaking News from Your Next Stop" : ""}</h2>
+            <div className="news_parent_divs">
+            <div style = {{display: 'flex' , justifyContent : 'center' , gap : '16px'}}>
+                {historicNews &&
+                    historicNews.areas &&
+                    Array.isArray(historicNews.areas) &&
+                    historicNews.areas != undefined &&
+                    historicNews.areas.length >= 1 &&
+                    historicNews.areas.map((el) => {
+                      return <NewsDiv data={el}/>
+                    }
+                    )
+                  }
+             </div>
+             <div style = {{display: 'flex' , justifyContent : 'center' , gap : '16px'}}>
+                {news &&
+                    news.areas &&
+                    Array.isArray(news.areas) &&
+                    news.areas != undefined &&
+                    news.areas.length >= 1 &&
+                    news.areas.map((el) => {
+                      return <NewsDiv data={el}/>
+                    }
+                    )
+                  }
+             </div>
             </div>
           </div>
 

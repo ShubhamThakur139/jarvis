@@ -14,6 +14,9 @@ import Solution from "./Solution";
 import DropDown from "./DropDown";
 
 const Home = () => {
+
+  localStorage.clear()
+
   const [from, setFrom] = useState([]);
   const [to, setTo] = useState([]);
   const [departDate, setDepartDate] = useState([]);
@@ -22,16 +25,18 @@ const Home = () => {
   const [searchResults, setSearchResults] = useState();
 
   const airportList = [
-    { label: "DEL - New Delhi, IN", value: "del" },
-    { label: "BLR - Bangalore, IN", value: "blr" },
-    { label: "BOM - Mumbai, IN", value: "bom" },
-    { label: "CCU - Kolkata, IN", value: "ccu" },
-    { label: "GOI - Goa, IN", value: "goi" },
-    { label: "HYD - Hyderabad, IN", value: "hyd" },
-    { label: "LKO - Lucknow, IN", value: "lko" },
-    { label: "BHO - Bhopal, IN", value: "bho" },
-    { label: "VNS - Varanasi, IN", value: "vns" },
-    { label: "GOP - Gorakhpur, IN", value: "gop" },
+    { label: "DEL - New Delhi, IN", value: "DEL" },
+    { label: "BLR - Bangalore, IN", value: "BLR" },
+    { label: "BOM - Mumbai, IN", value: "BOM" },
+    { label: "CCU - Kolkata, IN", value: "CCU" },
+    { label: "GOI - Goa, IN", value: "GOI" },
+    { label: "HYD - Hyderabad, IN", value: "HYD" },
+    { label: "LKO - Lucknow, IN", value: "LKO" },
+    { label: "BHO - Bhopal, IN", value: "BHO" },
+    { label: "VNS - Varanasi, IN", value: "VNS" },
+    { label: "GOP - Gorakhpur, IN", value: "GOP" },
+    {label: "JAI - Jaipur, IN", value: "JAI"},
+    {label: "MAA - Chennai, IN", value: "MAA"}
   ];
 
   const handleFromChange = (data) => {
@@ -146,7 +151,7 @@ const Home = () => {
         </div>
       </div>
       <div>
-       {searchResults && <Solution data={searchResults} /> }
+       {searchResults && <Solution data={searchResults.body} /> }
       </div>
     </div>
   );
