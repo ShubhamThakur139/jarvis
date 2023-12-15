@@ -1,6 +1,6 @@
 import Navbar from "./Navbar";
 import "./ItineraryPage.css";
-import React, { useState, useEffect , useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import TextField from "@mui/material/TextField";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
@@ -11,6 +11,8 @@ import Card from "./Card";
 import TravelInsurance from "./TravelInsurance";
 import NewsDiv from "./NewsDiv";
 import PriceDropModal from "./PriceDropModal";
+import DocumentDiv from "./DocumentDiv";
+import Button from "@mui/material/Button";
 
 const ItinerayPage = (data) => {
   const flightDetail = JSON.parse(localStorage.getItem("flightDetail"));
@@ -23,9 +25,11 @@ const ItinerayPage = (data) => {
   const [news, setNews] = useState([]);
   const [historicNews, setHistoricNews] = useState([]);
   const [cataolgueData, setCataolgueData] = useState([]);
-  const [showModal , setShowModal] = useState(false)
-  const firstLoad = useRef(true)
-  const totalPrice = flightDetail.totalPrice
+  const [showModal, setShowModal] = useState(false);
+  const firstLoad = useRef(true);
+  const totalPrice = flightDetail.totalPrice;
+
+  const [document, setDocument] = useState([]);
 
   console.log("isCheapFareSelected", isCheapFareSelected);
 
@@ -33,15 +37,41 @@ const ItinerayPage = (data) => {
     fetchNewsData();
     fetchHistoricNewsData();
     fetchCatalogueDetails();
+    fetchDocumentDetails();
   }, []);
 
-
   setTimeout(() => {
-    if(firstLoad.current){
-      setShowModal(true)
-      firstLoad.current = false
-    } 
-  }, 10000)
+    if (firstLoad.current) {
+      setShowModal(true);
+      firstLoad.current = false;
+    }
+  }, 10000);
+
+  const fetchDocumentDetails = async () => {
+    console.log("fetching document");
+
+    const postData = {
+      origin: from.toUpperCase(),
+      destination: to.toUpperCase(),
+      departTime: flightDetail.departDateTime,
+    };
+
+    try {
+      const response = await fetch("http://localhost:9080/requiredDocuments", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(postData),
+      });
+      const jsonData = await response.json();
+      console.log("document data", jsonData);
+      setDocument(jsonData);
+    } catch (error) {
+      console.error("Error while fetching document: ", error);
+    }
+  };
+
   const fetchCatalogueDetails = async () => {
     console.log("fetching cataolgue");
 
@@ -51,25 +81,27 @@ const ItinerayPage = (data) => {
       adult: adultCount,
       child: childCount,
       infant: infantCount,
-      flights: flightDetail
+      flights: flightDetail,
     };
 
     try {
-      const response = await fetch("http://localhost:9080/v1/catalogSuggestion", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(postData),
-      });
+      const response = await fetch(
+        "http://localhost:9080/v1/catalogSuggestion",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(postData),
+        }
+      );
       const jsonData = await response.json();
       console.log("catalogue data", jsonData);
       setCataolgueData(jsonData);
     } catch (error) {
       console.error("Error while fetching News: ", error);
     }
-
-  }
+  };
 
   const fetchNewsData = async () => {
     console.log("fetching news");
@@ -154,50 +186,72 @@ const ItinerayPage = (data) => {
             <FlightDetail data={flightDetail} />
           </div>
           <div>
-          <div id = 'insurance'>
-            <div>
-              <h3 className="reviewText margin  margin-top">
-                Select your fare
-              </h3>
+            <div id="insurance">
+              <div>
+                <h3 className="reviewText margin  margin-top">
+                  Select your fare
+                </h3>
+              </div>
+              <div>
+                <Card data={cardDetails} data2={totalPrice} />
+              </div>
             </div>
+
             <div>
-              <Card data={cardDetails} data2={totalPrice} />
+              <TravelInsurance />
             </div>
           </div>
 
-          <div>
-            <TravelInsurance />
-          </div>
-          </div>
-
-          <div style = {{display : 'flex' , flexDirection: 'column'}}>
-            {cataolgueData && cataolgueData.body && cataolgueData.body.flightResponse && cataolgueData.body.flightResponse.flightsList.length >=1 && !isCheapFareSelected && <PriceDropModal data={cataolgueData.body} showModal = {showModal} setShowModal = {setShowModal}/>}
-            <h2 className="inputDiv2">{(news) || (historicNews) ? "Journey Preview: Breaking News from Your Next Stop" : ""}</h2>
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            {cataolgueData &&
+              cataolgueData.body &&
+              cataolgueData.body.flightResponse &&
+              cataolgueData.body.flightResponse.flightsList.length >= 1 &&
+              !isCheapFareSelected && (
+                <PriceDropModal
+                  data={cataolgueData.body}
+                  showModal={showModal}
+                  setShowModal={setShowModal}
+                />
+              )}
+            <h2 className="inputDiv2">
+              {news || historicNews
+                ? "Journey Preview: Breaking News from Your Next Stop"
+                : ""}
+            </h2>
             <div className="news_parent_divs">
-            <div style = {{display: 'flex' , justifyContent : 'center' , gap : '16px'}}>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  gap: "46px",
+                }}
+              >
                 {historicNews &&
-                    historicNews.areas &&
-                    Array.isArray(historicNews.areas) &&
-                    historicNews.areas != undefined &&
-                    historicNews.areas.length >= 1 &&
-                    historicNews.areas.map((el) => {
-                      return <NewsDiv data={el}/>
-                    }
-                    )
-                  }
-             </div>
-             <div style = {{display: 'flex' , justifyContent : 'center' , gap : '16px'}}>
+                  historicNews.areas &&
+                  Array.isArray(historicNews.areas) &&
+                  historicNews.areas != undefined &&
+                  historicNews.areas.length >= 1 &&
+                  historicNews.areas.map((el) => {
+                    return <NewsDiv data={el} />;
+                  })}
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  gap: "16px",
+                }}
+              >
                 {news &&
-                    news.areas &&
-                    Array.isArray(news.areas) &&
-                    news.areas != undefined &&
-                    news.areas.length >= 1 &&
-                    news.areas.map((el) => {
-                      return <NewsDiv data={el}/>
-                    }
-                    )
-                  }
-             </div>
+                  news.areas &&
+                  Array.isArray(news.areas) &&
+                  news.areas != undefined &&
+                  news.areas.length >= 1 &&
+                  news.areas.map((el) => {
+                    return <NewsDiv data={el} />;
+                  })}
+              </div>
             </div>
           </div>
 
@@ -238,7 +292,28 @@ const ItinerayPage = (data) => {
               </div>
             </div>
           </div>
-          <div></div>
+
+          <div className="p_doc">
+            {document &&
+              document.documents &&
+              document.documents.length >= 1 && (
+                <>
+                  {" "}
+                  <h2 className='h2_travel'>Travel Documents</h2>
+                  <div><DocumentDiv data={document.documents} /></div>
+                </>
+              )}
+          </div>
+
+          <div>
+          <Button
+            variant="contained"
+            disableElevation
+            className="paymentbtn"
+          >
+            Continue To Payment
+          </Button>
+          </div>
         </div>
       </div>
     </>

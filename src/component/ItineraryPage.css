@@ -17,6 +17,28 @@
     margin-top: 40px;
 }
 
+.h2_travel {
+  margin-top: 45px;
+}
+
+.paymentbtn {
+  margin-top: 15px;
+}
+
+.paymentbtn {
+  Font-weight: 600 !important;
+  width: 15%;
+  height: 54px;
+  background-color: #FF4F17 !important;
+}
+
+
+.paymentbtn:hover {
+  width: 15%;
+  background-color: #d4581d !important;
+
+}
+
 .news_parent_divs {
   display: flex;
   justify-content: space-between;

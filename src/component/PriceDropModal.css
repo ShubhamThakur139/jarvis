@@ -1,6 +1,7 @@
 .css-105qr5e  {
     width: 750px !important;
-    height: 250px;
+    min-height: 250px;
+    padding: 10px;
 }
 .parent-modal-title {
     margin-bottom: 10px !important;

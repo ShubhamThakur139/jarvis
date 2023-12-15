@@ -1,0 +1,16 @@
+.main_doc_div {
+    width: 35%;
+    height: 300px;
+    margin: 20px 0;
+    overflow-y: auto;
+    background-color: #fff;
+    padding: 18px;
+    border: 0.3px solid rgb(209, 205, 205);
+    border-radius: 8px;
+}
+
+.innerDiv > p{
+    font-size: 15px;
+    font-weight: 400;
+    margin-bottom: 12px;
+}

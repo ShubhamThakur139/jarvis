@@ -36,7 +36,8 @@ const Home = () => {
     { label: "VNS - Varanasi, IN", value: "VNS" },
     { label: "GOP - Gorakhpur, IN", value: "GOP" },
     {label: "JAI - Jaipur, IN", value: "JAI"},
-    {label: "MAA - Chennai, IN", value: "MAA"}
+    {label: "MAA - Chennai, IN", value: "MAA"},
+    {label: "NYC - New York, US", value: "NYC"}
   ];
 
   const handleFromChange = (data) => {
