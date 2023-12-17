@@ -8,6 +8,7 @@ const Navbar = () => {
       <nav class="navbar navbar-light bg-light" className="p_navbar">
         <div class="container-fluid ml-5">
           <a class="navbar-brand" href="#" onClick={() => {
+            localStorage.clear()
                     navigate("/");
                   }}>
             <img

@@ -127,7 +127,7 @@ const Home = () => {
                 <DatePicker
                   className="air_dropdown"
                   onChange={(event) => handleDateChange(event)}
-                  value={departDate}
+                  // value={departDate}
                 />
               </DemoItem>
             </DemoContainer>

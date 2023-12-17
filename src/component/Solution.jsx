@@ -5,7 +5,8 @@ import { DateTime } from "luxon";
 import { useNavigate } from "react-router-dom";
 
 const Solution = ({ data }) => {
-  console.log("solution", data)
+  console.log("solution", data);
+  const isCheapFareSelected = localStorage.getItem("isCheapFareSelected");
   const sols = data.flightsList;
   const from = data.origin;
   const to = data.destination;
@@ -13,6 +14,8 @@ const Solution = ({ data }) => {
   const childCount = data.child;
   const infantCount = data.infant;
   let navigate = useNavigate();
+
+  console.log(isCheapFareSelected);
 
   return (
     <>
@@ -56,8 +59,36 @@ const Solution = ({ data }) => {
                   )}
                 </h4>
               </div>
-              <div>
-                <h2>{"₹" + data.totalPrice}</h2>
+              <div className="totalFareDiv">
+                {isCheapFareSelected ? (
+                  data.oldPrice > data.totalPrice ? (
+                    <>
+                      <h2>{"₹" + data.totalPrice}</h2>
+                      <img
+                        src="decrease.png"
+                        alt="decrease logo"
+                        width="32"
+                        height="32"
+                        class="logo"
+                      />
+                    </>
+                  ) : (
+                    <>
+                      <h2>{"₹" + data.totalPrice}</h2>
+                      <img
+                        src="increase.png"
+                        alt="increase logo"
+                        width="32"
+                        height="32"
+                        class="logo"
+                      />
+                    </>
+                  )
+                ) : (
+                  <h2>{"₹" + data.totalPrice}</h2>
+                )}
+                {/* {isCheapFareSelected==undefined && <h2>{"₹" + data.totalPrice}</h2>} */}
+                {/* <h2>{"₹" + data.totalPrice}</h2> */}
               </div>
               <div>
                 <Button

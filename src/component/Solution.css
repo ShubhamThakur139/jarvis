@@ -6,7 +6,11 @@
 align-items: center;
 }
 
-
+.totalFareDiv{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
 .solutionDiv {
     height: 110px;
     margin: 14px 0px;
